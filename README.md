@@ -98,7 +98,7 @@ App
 
 3. **Start the development server**
    ```bash
-   npm start
+   npx expo start
    ```
 
 4. **Test the app**
