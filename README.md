@@ -225,18 +225,6 @@ eas build --platform all
 - **Performance**: Image caching and lazy loading
 - **Analytics**: User behavior tracking
 - **A/B Testing**: Feature experimentation framework
-
-## 📞 Support
-
-For technical support or questions:
-- Email: support@bizbites.com
-- Documentation: [Project Documentation]
-- Issues: [GitHub Issues]
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ---
 
 **BizBites v2.0.0** - Complete Authentication System
