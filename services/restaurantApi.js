@@ -1,6 +1,6 @@
 // Restaurant API service
-// const API_BASE_URL = 'http://192.168.102.132:3001/api/v1'; // Updated to match backend API prefix
-const API_BASE_URL = 'http://192.168.0.118:3001/api/mobile'; // Updated to match backend API prefix
+import Constants from 'expo-constants';
+const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
 export const restaurantApi = {
   // Get all restaurants with optional filters
   getAllRestaurants: async (filters = {}) => {

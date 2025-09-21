@@ -1,7 +1,6 @@
 import axios from 'axios';
-import env from 'dotenv';
-// const API_BASE_URL = 'http://192.168.102.132:3001/api/v1'; // Updated to match backend API prefix 'http://192.168.0.118:3001/api/v1'; // Updated to match backend API prefix
-const API_BASE_URL = process.env.API_BASE_URL; 
+import Constants from 'expo-constants';
+const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
