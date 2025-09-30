@@ -50,7 +50,8 @@ export const restaurantApi = {
       const queryString = queryParams.toString();
       //console.log('restaurantApi.getAllRestaurants - Query Params:', queryString);
       if (filters.zipCode) {
-        url = `${API_BASE_URL}/restaurants/all${queryString ? `?${queryString}` : ''}`;
+        url = `${API_BASE_URL}/restaurants/public${queryString ? `?${queryString}` : ''}`;
+        // console.log('restaurantApi.getAllRestaurants - Fetching by zipCode, URL:', url);
       } else if (filters.latitude && filters.longitude) {
         url = `${API_BASE_URL}/restaurants/nearby${queryString ? `?${queryString}` : ''}`;
       } else if (filters.search) {
@@ -59,9 +60,9 @@ export const restaurantApi = {
         url = `${API_BASE_URL}/restaurants/search${queryString ? `?${queryString}` : ''}`;
       } else {
         // NEW: Fetch all restaurants if no filters/zipcode
-        url = `${API_BASE_URL}/restaurants/all`;
+        url = `${API_BASE_URL}/restaurants/public`;
       }
-      //console.log('restaurantApi.getAllRestaurants - Constructed URL:', url);
+      // console.log('restaurantApi.getAllRestaurants - Constructed URL:', url);
 
       const response = await fetch(url, {
         method: 'GET',
@@ -69,13 +70,13 @@ export const restaurantApi = {
           'Content-Type': 'application/json',
         },
       });
-
+      // console.log('restaurantApi.getAllRestaurants - HTTP Response Status:', response.data);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      //console.log('restaurantApi.getAllRestaurants - Response data:', data);
+      // console.log('restaurantApi.getAllRestaurants - Response data:', data);
       return data;
     } catch (error) {
       console.error('Error fetching restaurants:', error);
@@ -370,7 +371,7 @@ export const mockRestaurants = [
 export const getRestaurantsWithFallback = async (filters = {}) => {
   try {
     const response = await restaurantApi.getAllRestaurants(filters);
-
+    // console.log('Fetched restaurants from API:', response);
     // Handle different response formats from the API
     if (response && response.success && Array.isArray(response.data)) {
       return response.data;
@@ -387,7 +388,8 @@ export const getRestaurantsWithFallback = async (filters = {}) => {
     console.warn('Backend not available, using mock data:', error.message);
 
     // Apply basic filtering to mock data
-    let filteredData = [...mockRestaurants];
+    let filteredData = [];
+    //let filteredData = [...mockRestaurants];
 
     if (filters.search) {
       const searchTerm = filters.search.toLowerCase();
@@ -422,10 +424,11 @@ export const getRestaurantsWithFallback = async (filters = {}) => {
 
 export const getRestaurantByIdWithFallback = async (id) => {
   try {
+    // console.log('Fetching restaurant by ID from API:', id);
     return await restaurantApi.getRestaurantById(id);
   } catch (error) {
     console.warn('Backend not available, using mock data:', error.message);
-    return mockRestaurants.find(restaurant => restaurant.id === id || restaurant.yelp_id === id);
+    // return mockRestaurants.find(restaurant => restaurant.id === id || restaurant.yelp_id === id);
   }
 };
 
